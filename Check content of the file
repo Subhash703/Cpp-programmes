@@ -1,0 +1,38 @@
+#include<iostream>
+#include<string.h>
+#include<fstream>
+using namespace std;
+ 
+
+int main(){
+	
+	fstream new_file1, new_file2;
+
+	new_file1.open("file1.txt",ios::app | ios::out | ios::in);
+	new_file2.open("file2.txt",ios::app | ios::out | ios::in);
+	if(!new_file1 || !new_file2) 
+	{
+		cout<<"File creation failed or file cannot be created";
+	}
+	
+	//Reading  that data :
+	new_file1.seekg(0, ios::beg); 		//Setting the pointer at starting of the file
+	while (!new_file1.eof() || !new_file2.eof()){ 
+	 	char ch1;
+	 	char ch2;
+		new_file1 >>ch1;
+		new_file2 >>ch2; 
+		if(ch1 != ch2){
+			new_file1.close();
+			new_file2.close();
+			cout<<"Contents are not same";
+			return 0;
+		}	
+		
+	}
+	new_file1.close();
+	new_file2.close();
+	cout<<"Contents are same !";
+	return 0;
+		
+}
