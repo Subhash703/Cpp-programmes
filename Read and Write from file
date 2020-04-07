@@ -1,0 +1,72 @@
+#include<iostream>
+#include<string.h>
+#include<fstream>
+using namespace std;
+ 
+class Person{
+	string name;
+	int age;
+	long phone_no;
+	string address;
+	public : 
+		string getName()
+		{
+			getline( cin, name );
+			return name;
+		}
+		int getAge()
+		{
+			cin>>age;
+			cin.ignore();
+			return age;
+		}
+		long getPhone()
+		{
+			cin>>phone_no;
+			cin.ignore();
+			return phone_no;
+		}
+		string getAddress()
+		{
+			getline(cin , address);
+			return address;
+		}		
+};
+
+int main(){
+	
+	Person arr[5];
+	
+	/*This program only reads and write data till 3 users after it terminates the program with the error 
+		"Throwing an instance of std bad_alloc , because my RAM cannot hold the pointer that much time "
+	*/
+	fstream new_file;
+	new_file.open("person.txt",ios::app | ios::out | ios::in);
+	if(!new_file) 
+	{
+		cout<<"File creation failed";
+	}
+	for(int i = 1; i<=5; i++){
+		cout<<"Enter the name of the  Person "<<i<<":";
+		new_file<<"Name :"<<arr[i].getName()<<"\n";
+		cout<<"Enter the Age of the  Person "<<i<<":";
+		new_file<<"Age :"<<arr[i].getAge()<<"\n";
+		cout<<"Enter the Phone Number of the  Person "<<i<<":";
+		new_file<<"Phone_number :"<<arr[i].getPhone()<<"\n";
+		cout<<"Enter the Current Address of the  Person "<<i<<":";
+		new_file<<"Address :"<<arr[i].getAddress()<<"\n";		
+	}
+	//Reading  that data :
+	new_file.seekg(0, ios::beg); 		//Setting the pointer at starting of the file
+	while (!new_file.eof()){ 
+	 	char ch;
+		new_file >>ch; 
+		cout << ch;	
+		if(new_file=='\0'){
+			cout<<"\n";
+		}
+	}
+	new_file.close();
+	return 0;
+		
+}
